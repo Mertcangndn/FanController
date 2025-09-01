@@ -1,12 +1,18 @@
 package com.example.fancontroller;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,18 +30,20 @@ public class MainActivityJava extends AppCompatActivity {
     EditText hourOnes;    //Saatin birler basamağının bulunduğu değişken
     Button startButton;     //Sayımı başlatma butonu
     Button stopButton;      //Vantilatörü anında durdurma butonu
+    TextView timer3;    // ":" işareti
+    ImageView recep;    //Recep resmi
 
     //EditText View'lerinden sayıları almaya yarayan fonksiyon
-    private int getNumberFromEditText(EditText et){
+    private long getNumberFromEditText(EditText et){
         String text = et.getText().toString();
         if(text.isEmpty()){
             return 0;
         }
-        return Integer.parseInt(text);
+        return Long.parseLong(text);
     }
 
     CountDownTimer countDownTimer; //Public geri sayım nesnesi
-    int mTens, mOnes, hTens, hOnes=0;
+    long mTens, mOnes, hTens, hOnes=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,8 @@ public class MainActivityJava extends AppCompatActivity {
         minuteOnes = findViewById(R.id.minuteOnes);
         startButton = findViewById(R.id.startButton);
         stopButton = findViewById(R.id.stopButton);
+        timer3 = findViewById(R.id.Timer3);
+        recep = findViewById(R.id.recep);
 
         //Listener'ler
         //startButton On Click Listener:
@@ -66,7 +76,7 @@ public class MainActivityJava extends AppCompatActivity {
                             mOnes = getNumberFromEditText(minuteOnes);
                             hTens = getNumberFromEditText(hourTens);
                             hOnes = getNumberFromEditText(hourOnes);
-                            int totalTime = (mTens*10+mOnes)*60+(hTens*10+hOnes)*3600; //Sürenin tamamının saniyeye çevirmiş hali.
+                            long totalTime = (mTens*10+mOnes)*60+(hTens*10+hOnes)*3600; //Sürenin tamamının saniyeye çevirmiş hali.
 
 
                             //Başlat tuşunu iptal et yapma
@@ -138,6 +148,7 @@ public class MainActivityJava extends AppCompatActivity {
                     }
                 }
         );
+
         //stopButton On Click Listener:
         stopButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -164,6 +175,11 @@ public class MainActivityJava extends AppCompatActivity {
                         hourTens.setEnabled(true);
                         hourOnes.setEnabled(true);
 
+                        hourTens.clearFocus();
+                        hourOnes.clearFocus();
+                        minuteTens.clearFocus();
+                        minuteOnes.clearFocus();
+
                         //Başlat tuşunu düzeltme
                         if(startButton.getText().toString().equals("İptal Et")){
                             startButton.setText("Başlat");
@@ -174,6 +190,138 @@ public class MainActivityJava extends AppCompatActivity {
                     }
                 }
         );
+
+        //Sayaç Listener'leri
+        hourTens.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus && hourTens.getText().toString().equals("0")){
+                hourTens.setText("");
+            } else if (hourTens.getText().toString().equals("")) {
+                hourTens.setText("0");
+            }
+        });
+        hourOnes.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus && hourOnes.getText().toString().equals("0")){
+                hourOnes.setText("");
+            }else if (hourOnes.getText().toString().equals("")) {
+                hourOnes.setText("0");
+            }
+        });
+        minuteTens.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus && minuteTens.getText().toString().equals("0")){
+                minuteTens.setText("");
+            }else if (minuteTens.getText().toString().equals("")) {
+                minuteTens.setText("0");
+            }
+        });
+        minuteOnes.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus && minuteOnes.getText().toString().equals("0")){
+                minuteOnes.setText("");
+            }else if (minuteOnes.getText().toString().equals("")) {
+                minuteOnes.setText("0");
+            }
+        });
+
+        //Sayaç basamak sınırı ve otomatik geçiş koyma
+        hourTens.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()==1){
+                    hourTens.clearFocus();
+                    hourOnes.requestFocus();
+                    hourOnes.setSelection(hourOnes.getText().length());
+                }
+            }
+        });
+        hourOnes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()==1){
+                    hourOnes.clearFocus();
+                    minuteTens.requestFocus();
+                    minuteTens.setSelection(minuteTens.getText().length());
+                }
+            }
+        });
+        minuteTens.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()==1){
+                    minuteTens.clearFocus();
+                    minuteOnes.requestFocus();
+                    minuteOnes.setSelection(minuteOnes.getText().length());
+                }
+            }
+        });
+        minuteOnes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()==1){
+                    minuteOnes.clearFocus();
+                    // Klavyeyi kapat
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(minuteOnes.getWindowToken(), 0);
+                }
+            }
+        });
+
+        //RİCEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEB
+        final int[] recepCount = {0};
+        timer3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recepCount[0]++;
+                if(recepCount[0]==18){
+                    recep.setVisibility(View.VISIBLE);
+                    recep.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recep.setVisibility(View.GONE);
+                        }
+                    });
+                    recepCount[0]=0;
+                }
+            }
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

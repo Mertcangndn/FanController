@@ -8,6 +8,16 @@
     android:orientation="horizontal">
 
 
+    <ImageView
+        android:id="@+id/recep"
+        android:layout_width="570dp"
+        android:layout_height="989dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/recep" />
+
     <TextView
         android:id="@+id/Timer3"
         android:layout_width="66dp"
@@ -24,7 +34,7 @@
         app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.257" />
+        app:layout_constraintVertical_bias="0.32999998" />
 
     <EditText
         android:id="@+id/hourTens"
@@ -38,12 +48,15 @@
         android:text="0"
         android:textAlignment="center"
         android:textSize="60sp"
+        android:maxLength="1"
+        android:focusableInTouchMode="true"
+        android:longClickable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Timer3"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.257" />
+        app:layout_constraintVertical_bias="0.32999998" />
 
     <EditText
         android:id="@+id/hourOnes"
@@ -57,12 +70,15 @@
         android:text="0"
         android:textAlignment="center"
         android:textSize="60sp"
+        android:maxLength="1"
+        android:focusableInTouchMode="true"
+        android:longClickable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Timer3"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.257" />
+        app:layout_constraintVertical_bias="0.32999998" />
 
     <EditText
         android:id="@+id/minuteOnes"
@@ -76,12 +92,15 @@
         android:text="0"
         android:textAlignment="center"
         android:textSize="60sp"
+        android:maxLength="1"
+        android:focusableInTouchMode="true"
+        android:longClickable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.882"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.257" />
+        app:layout_constraintVertical_bias="0.32999998" />
 
     <EditText
         android:id="@+id/minuteTens"
@@ -95,12 +114,15 @@
         android:text="0"
         android:textAlignment="center"
         android:textSize="60sp"
+        android:maxLength="1"
+        android:focusableInTouchMode="true"
+        android:longClickable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.705"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.257" />
+        app:layout_constraintVertical_bias="0.32999998" />
 
     <Button
         android:id="@+id/startButton"
@@ -140,5 +162,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.76" />
+
+    <TableRow
+        android:id="@+id/TopBar"
+        android:layout_width="412dp"
+        android:layout_height="20dp"
+        android:background="#070202"
+        android:backgroundTint="#2F2828"
+        android:backgroundTintMode="add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Fan Controller by Mertcangndn"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </TableRow>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
