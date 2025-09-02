@@ -106,7 +106,9 @@ public class MainActivityJava extends AppCompatActivity {
 
                                 public void onFinish() {    //Bitince uyarı mesajı yazıyor.
                                     Toast.makeText(MainActivityJava.this, "Süre Bitti\nVantilatör Kapatılıyor", Toast.LENGTH_SHORT).show();
-                                    countDownTimer.cancel();
+                                    if(totalTime!=0){   //Sayaca hiç dokunmadan başlata basınca uygulamanın çökmesine sebep olan bug'u düzeltmek için
+                                        countDownTimer.cancel();
+                                    }
 
                                     //Sayacı tekrar dokunulabilir yapma
                                     minuteTens.setEnabled(true);
